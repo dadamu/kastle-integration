@@ -3,9 +3,6 @@ import { kairos, mainnet } from "wagmi/chains";
 import { injected, createConnector } from "wagmi";
 import { custom } from "viem";
 
-const IGRA_DEV_NET_RPC_URL =
-  "http://devnet.igralabs.com:8545/a2e19f37d58648c9b71c3a5f902d140e/";
-
 const createCustomTransport = (url: string) =>
   custom({
     async request({ method, params }) {
@@ -85,31 +82,7 @@ function createKastleConnector() {
 export const config = getDefaultConfig({
   appName: "RainbowKit demo",
   projectId: "YOUR_PROJECT_ID",
-  chains: [
-    {
-      id: 2600,
-      name: "Igra Devnet",
-      rpcUrls: {
-        default: {
-          http: [IGRA_DEV_NET_RPC_URL],
-        },
-      },
-      blockExplorers: {
-        default: {
-          name: "Igra Explorer",
-          url: "https://brash-brash-grandmother.tryethernal.com",
-        },
-      },
-      nativeCurrency: {
-        decimals: 18,
-        name: "Igra Devnet",
-        symbol: "iKas",
-      },
-      transport: createCustomTransport(IGRA_DEV_NET_RPC_URL),
-    },
-    kairos,
-    mainnet,
-  ],
+  chains: [kairos, mainnet],
   wallets: [
     {
       groupName: "Popular wallets",
