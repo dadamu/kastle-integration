@@ -1,39 +1,6 @@
 import { getDefaultConfig, Wallet } from "@rainbow-me/rainbowkit";
 import { kairos, mainnet } from "wagmi/chains";
 import { injected, createConnector } from "wagmi";
-import { custom } from "viem";
-
-const createCustomTransport = (url: string) =>
-  custom({
-    async request({ method, params }) {
-      const body = JSON.stringify({
-        jsonrpc: "2.0",
-        id: Math.floor(Math.random() * 1000000),
-        method,
-        params: params || [],
-      });
-
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body,
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      const data = await response.json();
-
-      if (data.error) {
-        throw new Error(data.error.message || "RPC Error");
-      }
-
-      return data.result;
-    },
-  });
 
 const kastleWallet = (): Wallet => ({
   id: "kastle",
